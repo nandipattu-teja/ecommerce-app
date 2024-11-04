@@ -14,7 +14,7 @@ const products = [
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Welcome to the Sample E-commerce Site');
+  res.send('Welcome to the E-commerce Site');
 });
 
 app.get('/products', (req, res) => {
