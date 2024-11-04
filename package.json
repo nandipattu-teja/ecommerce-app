@@ -1,0 +1,16 @@
+{
+  "name": "sample-ecommerce-site",
+  "version": "1.0.0",
+  "description": "A sample Node.js e-commerce application",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "teja",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1"
+  }
+}
