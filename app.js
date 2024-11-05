@@ -9,11 +9,11 @@ app.use(bodyParser.json());
 
 // Configure the MySQL connection
 const db = mysql.createConnection({
-  host: "database-2.cpoqq8ce6jvx.us-east-1.rds.amazonaws.com" || process.env.DB_HOST,
-  user: "admin" || process.env.DB_USER,
-  password: "U6LPfPHjm8dByFH09gog" || process.env.DB_PASSWORD,
-  database: "my_db" || process.env.DB_NAME,
-  port: 3306 || process.env.DB_PORT,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
 });
 
 // Connect to the database
