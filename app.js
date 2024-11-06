@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+const AWS = require('aws-sdk');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -19,13 +20,30 @@ const db = mysql.createConnection({
 // Connect to the database
 db.connect((err) => {
   if (err) {
-    alert(err)
     console.error('Database connection failed:', err.stack);
     return;
   }
   console.log('Connected to the database.');
-  alert('database connected successfully')
 });
+
+// Configure SQS
+const sqs = new AWS.SQS({ region: 'us-east-1' });
+const queueUrl = process.env.SQS_QUEUE_URL; // Store your Queue URL in .env
+
+// Function to send a message to SQS
+const sendMessageToSQS = async (messageBody) => {
+  const params = {
+    QueueUrl: queueUrl,
+    MessageBody: JSON.stringify(messageBody),
+  };
+
+  try {
+    const data = await sqs.sendMessage(params).promise();
+    console.log('Message sent successfully:', data.MessageId);
+  } catch (error) {
+    console.error('Error sending message to SQS:', error);
+  }
+};
 
 // Routes
 app.get('/', (req, res) => {
@@ -43,21 +61,22 @@ app.get('/products', (req, res) => {
   });
 });
 
-// Place an order
-app.post('/order', (req, res) => {
+app.post('/order', async (req, res) => {
   const { productId } = req.body;
-  db.query('SELECT * FROM products WHERE id = ?', [productId], (err, results) => {
+  db.query('SELECT * FROM products WHERE id = ?', [productId], async (err, results) => {
     if (err) {
       res.status(500).json({ error: 'Database query failed' });
     } else if (results.length > 0) {
+      const order = { orderId: Date.now(), product: results[0] };
       res.json({ message: 'Order placed successfully', product: results[0] });
+
+      await sendMessageToSQS(order);
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
   });
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
