@@ -1,21 +1,29 @@
-# E-commerce Node.js Application
+# Node.js E-Commerce Backend
 
-This is a simple e-commerce application built with Node.js and Express. The application connects to an Amazon RDS database to manage and display products. You can view products and place orders through the provided API.
+This is the backend for the e-commerce application built using **Node.js**, **Express**, **MySQL** (RDS), **Amazon S3**, **SQS**, and other AWS services. The backend provides essential features for handling products, orders, and integrates with AWS services like **S3**, **RDS**, **SQS**, and **CloudWatch**.
 
 ## Features
-- View a list of products
-- Place orders for products
-- Connect to an Amazon RDS database for data storage
+
+- **Product Management**: Add and retrieve products.
+- **Order Management**: Place orders, save order details in MySQL, and send order information to **SQS**.
+- **AWS Integration**:
+  - **Amazon RDS** (MySQL) for storing product and order data.
+  - **Amazon S3** for static file storage (e.g., images).
+  - **SQS** for messaging (send messages when an order is placed).
+  - **CloudWatch** for monitoring logs and metrics.
+  - **Elastic Beanstalk** for deployment.
 
 ## Prerequisites
 
-- **Node.js** (v14 or higher)
-- **npm** (Node Package Manager)
-- **Amazon RDS** instance (MySQL, PostgreSQL, etc.)
+1. **Node.js** (version 14.x or higher).
+2. **MySQL** (RDS instance created on AWS).
+3. **AWS account** with S3, SQS, RDS, CloudWatch, and Elastic Beanstalk set up.
+4. **AWS CLI** configured with proper credentials.
 
-## Setup Instructions
+## Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/ecommerce-app.git
-   cd ecommerce-app
+Clone this repository:
+
+```bash
+git clone <repository-url>
+cd ecommerce-app
