@@ -1,5 +1,5 @@
 import { execute } from '../config/db.js';  // Database execution
-import { sendMessage } from '../utils/sqsHandler.js';  // SQS utility
+import { sendMessage } from '../utils/awsHandler.js';  // SQS utility
 
 // Function to place an order
 export async function placeOrder(req, res) {
